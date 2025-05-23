@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enhanced Data Infographic</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Icons');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 25s ease infinite;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    nav {
+      display: flex;
+      width: 100vw;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    nav h2 {
+      margin: 0;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #ffd166;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ff9500;
+    }
+
+    .container {
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2.5rem;
+      
+      margin: 0 auto;
+    }
+
+    h1 {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 12px rgba(255,255,255,0.4);
+      animation: textGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlow {
+      from { filter: drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+      to { filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)); }
+    }
+
+    .infographic-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .infographic-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .infographic-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon {
+      font-size: 2.8rem;
+      color: #ffd166;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .infographic-content h3 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #ffd166;
+    }
+
+    .infographic-content p {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .chart-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    .pie-chart {
+      width: 200px;
+      height: 200px;
+      transform: rotate(-90deg);
+    }
+
+    .pie-segment {
+      fill: none;
+      stroke-width: 32;
+      r: 15.91549430918954;
+      cx: 50;
+      cy: 50;
+    }
+
+    .pie-background {
+      stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    .pie-mobile {
+      stroke: #ff6b6b;
+      stroke-dasharray: 62.83 100;
+      stroke-dashoffset: 0;
+      animation: drawPie1 2s ease-out forwards;
+    }
+
+    .pie-desktop {
+      stroke: #4ecdc4;
+      stroke-dasharray: 25.13 100;
+      stroke-dashoffset: -62.83;
+      animation: drawPie2 2s ease-out 0.5s forwards;
+    }
+
+    .pie-tablet {
+      stroke: #ffe66d;
+      stroke-dasharray: 12.57 100;
+      stroke-dashoffset: -87.96;
+      animation: drawPie3 2s ease-out 1s forwards;
+    }
+
+    @keyframes drawPie1 {
+      from { stroke-dasharray: 0 100; }
+      to { stroke-dasharray: 62.83 100; }
+    }
+
+    @keyframes drawPie2 {
+      from { stroke-dasharray: 0 100; }
+      to { stroke-dasharray: 25.13 100; }
+    }
+
+    @keyframes drawPie3 {
+      from { stroke-dasharray: 0 100; }
+      to { stroke-dasharray: 12.57 100; }
+    }
+
+    .chart-legend {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+    }
+
+    .bar-chart {
+      width: 100%;
+      height: 250px;
+      margin-top: 1rem;
+    }
+
+    .bar {
+      transition: all 0.5s ease;
+    }
+
+    .bar:hover {
+      opacity: 0.8;
+    }
+
+    .bar-value {
+      font-size: 12px;
+      fill: #fff;
+      text-anchor: middle;
+      font-weight: 600;
+    }
+
+    .donut-chart {
+      width: 180px;
+      height: 180px;
+      transform: rotate(-90deg);
+    }
+
+    .donut-segment {
+      fill: none;
+      stroke-width: 20;
+      r: 25;
+      cx: 50;
+      cy: 50;
+    }
+
+    .progress-ring {
+      transition: stroke-dasharray 0.8s ease-out;
+    }
+
+    .chart-center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .chart-center-number {
+      font-size: 1.8rem;
+      color: #ffd166;
+    }
+
+    .chart-center-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 0.2rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .metric-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .metric-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffd166;
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    .screenshot-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .screenshot-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+    }
+
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
+
+    .loader span {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255,255,255,0.3);
+      border-top: 6px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      nav {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      nav ul {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h2>Analytics Dashboard 2025</h2>
+    <ul>
+      <li><a href="#metrics">Metrics</a></li>
+      <li><a href="#devices">Devices</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#growth">Growth</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>2025 Impact Report</h1>
+
+    <div class="infographic-card" id="metrics">
+      <div class="card-header">
+        <span class="material-icons icon">trending_up</span>
+        <div class="infographic-content">
+          <h3>Growth Metrics</h3>
+          <p>Our platform experienced remarkable growth across all key performance indicators this quarter.</p>
+        </div>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <span class="metric-number">64%</span>
+          <div class="metric-label">User Growth</div>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">38%</span>
+          <div class="metric-label">Engagement</div>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">92%</span>
+          <div class="metric-label">Retention</div>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">156%</span>
+          <div class="metric-label">Revenue</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="infographic-card" id="devices">
+      <div class="card-header">
+        <span class="material-icons icon">pie_chart</span>
+        <div class="infographic-content">
+          <h3>Device Distribution</h3>
+          <p>Mobile usage continues to dominate our user base, with desktop and tablet following.</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg class="pie-chart" viewBox="0 0 100 100">
+          <circle class="pie-segment pie-background" stroke-dasharray="100 0" />
+          <circle class="pie-segment pie-mobile" />
+          <circle class="pie-segment pie-desktop" />
+          <circle class="pie-segment pie-tablet" />
+        </svg>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ff6b6b;"></div>
+          <span>Mobile (62%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #4ecdc4;"></div>
+          <span>Desktop (25%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ffe66d;"></div>
+          <span>Tablet (13%)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="infographic-card" id="performance">
+      <div class="card-header">
+        <span class="material-icons icon">speed</span>
+        <div class="infographic-content">
+          <h3>Performance Score</h3>
+          <p>Our application performance metrics show excellent user experience across all platforms.</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg class="donut-chart" viewBox="0 0 100 100">
+          <circle class="donut-segment" stroke="rgba(255,255,255,0.2)" stroke-dasharray="157 0" />
+          <circle class="donut-segment progress-ring" stroke="#4facfe" stroke-dasharray="141.3 157" stroke-linecap="round" />
+        </svg>
+        <div class="chart-center-text">
+          <div class="chart-center-number">90</div>
+          <div class="chart-center-label">Score</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="infographic-card" id="growth">
+      <div class="card-header">
+        <span class="material-icons icon">bar_chart</span>
+        <div class="infographic-content">
+          <h3>Monthly Revenue Growth</h3>
+          <p>Consistent revenue growth throughout the year with accelerating momentum in Q4.</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg class="bar-chart" viewBox="0 0 400 250">
+          <defs>
+            <linearGradient id="barGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff9f43;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="barGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#26d0ce;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="barGradient3" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#ffe66d;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff9ff3;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          
+          <!-- Bars -->
+          <rect class="bar" x="50" y="150" width="40" height="80" fill="url(#barGradient1)" rx="4">
+            <animate attributeName="height" values="0;80" dur="1s" begin="0s" />
+            <animate attributeName="y" values="230;150" dur="1s" begin="0s" />
+          </rect>
+          <rect class="bar" x="110" y="120" width="40" height="110" fill="url(#barGradient2)" rx="4">
+            <animate attributeName="height" values="0;110" dur="1s" begin="0.2s" />
+            <animate attributeName="y" values="230;120" dur="1s" begin="0.2s" />
+          </rect>
+          <rect class="bar" x="170" y="100" width="40" height="130" fill="url(#barGradient3)" rx="4">
+            <animate attributeName="height" values="0;130" dur="1s" begin="0.4s" />
+            <animate attributeName="y" values="230;100" dur="1s" begin="0.4s" />
+          </rect>
+          <rect class="bar" x="230" y="80" width="40" height="150" fill="url(#barGradient1)" rx="4">
+            <animate attributeName="height" values="0;150" dur="1s" begin="0.6s" />
+            <animate attributeName="y" values="230;80" dur="1s" begin="0.6s" />
+          </rect>
+          <rect class="bar" x="290" y="50" width="40" height="180" fill="url(#barGradient2)" rx="4">
+            <animate attributeName="height" values="0;180" dur="1s" begin="0.8s" />
+            <animate attributeName="y" values="230;50" dur="1s" begin="0.8s" />
+          </rect>
+          
+          <!-- Labels -->
+          <text class="bar-value" x="70" y="245" fill="rgba(255,255,255,0.8)">Jan</text>
+          <text class="bar-value" x="130" y="245" fill="rgba(255,255,255,0.8)">Feb</text>
+          <text class="bar-value" x="190" y="245" fill="rgba(255,255,255,0.8)">Mar</text>
+          <text class="bar-value" x="250" y="245" fill="rgba(255,255,255,0.8)">Apr</text>
+          <text class="bar-value" x="310" y="245" fill="rgba(255,255,255,0.8)">May</text>
+          
+          <!-- Values -->
+          <text class="bar-value" x="70" y="140" fill="#fff">45K</text>
+          <text class="bar-value" x="130" y="110" fill="#fff">62K</text>
+          <text class="bar-value" x="190" y="90" fill="#fff">78K</text>
+          <text class="bar-value" x="250" y="70" fill="#fff">94K</text>
+          <text class="bar-value" x="310" y="40" fill="#fff">125K</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="infographic-card">
+      <div class="card-header">
+        <span class="material-icons icon">schema</span>
+        <div class="infographic-content">
+          <h3>Feature Development Pipeline</h3>
+          <p>Strategic roadmap showing our systematic approach to feature development and deployment.</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg class="bar-chart" width="100%" height="200" viewBox="0 0 600 200">
+          <defs>
+            <linearGradient id="flowGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff9f43;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="flowGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#26d0ce;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="flowGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ffe66d;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff9ff3;stop-opacity:1" />
+            </linearGradient>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 3 L 0 6 z" fill="rgba(255,255,255,0.8)" />
+            </marker>
+          </defs>
+          
+          <rect x="20" y="40" width="150" height="60" rx="15" fill="url(#flowGradient1)" />
+          <rect x="230" y="40" width="150" height="60" rx="15" fill="url(#flowGradient2)" />
+          <rect x="440" y="40" width="150" height="60" rx="15" fill="url(#flowGradient3)" />
+          
+          <text x="95" y="75" font-size="18" font-weight="600" fill="#fff" text-anchor="middle">Ideation</text>
+          <text x="305" y="75" font-size="18" font-weight="600" fill="#fff" text-anchor="middle">Development</text>
+          <text x="515" y="75" font-size="18" font-weight="600" fill="#fff" text-anchor="middle">Launch</text>
+          
+          <line x1="170" y1="70" x2="230" y2="70" stroke="rgba(255,255,255,0.8)" stroke-width="3" marker-end="url(#arrow)" />
+          <line x1="380" y1="70" x2="440" y2="70" stroke="rgba(255,255,255,0.8)" stroke-width="3" marker-end="url(#arrow)" />
+          
+          <!-- Timeline indicators -->
+          <text x="95" y="125" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">2-3 weeks</text>
+          <text x="305" y="125" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">6-8 weeks</text>
+          <text x="515" y="125" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">1-2 weeks</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <button class="screenshot-btn" onclick="takeScreenshot()">
+    <span class="material-icons">camera_alt</span>
+    Screenshot
+  </button>
+
+  <div class="loader" id="loader">
+    <span></span>
+  </div>
+
+  <script>
+    // Animate progress ring on load
+    window.addEventListener('load', function() {
+      const progressRing = document.querySelector('.progress-ring');
+      if (progressRing) {
+        progressRing.style.strokeDasharray = '141.3 157';
+      }
+    });
+
+    async function takeScreenshot() {
+  const loader = document.getElementById('loader');
+  loader.style.display = 'flex';
+
+  const url = window.location.href;
+  const screenWidth = window.innerWidth;
+  const deviceScaleFactor = window.devicePixelRatio;
+
+  try {
+    const res = await fetch(`http://localhost:3001/screenshot?url=${encodeURIComponent(url)}&screenWidth=${screenWidth}&deviceScaleFactor=${deviceScaleFactor}`);
+    if (!res.ok) throw new Error('Failed to capture screenshot');
+
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'enhanced-infographic-screenshot.png';
+    a.click();
+  } catch (err) {
+    alert('Error: ' + err.message);
+    console.error(err);
+  } finally {
+    loader.style.display = 'none';
+  }
+}
+
+
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('nav ul li a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
