@@ -8,14 +8,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 
-// Serve the frontend HTML at root "/"
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Screenshot endpoint
 app.get('/screenshot', async (req, res) => {
@@ -30,7 +28,7 @@ app.get('/screenshot', async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
@@ -38,7 +36,7 @@ app.get('/screenshot', async (req, res) => {
 
     await page.setViewport({
       width,
-      height: 800, // This height doesn't matter when fullPage is true
+      height: 800,
       deviceScaleFactor: scale,
     });
 
@@ -61,10 +59,7 @@ app.get('/screenshot', async (req, res) => {
   }
 });
 
-
-
-
-
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });

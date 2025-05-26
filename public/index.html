@@ -634,7 +634,7 @@
   const deviceScaleFactor = window.devicePixelRatio;
 
   try {
-    const res = await fetch(`http://localhost:3001/screenshot?url=${encodeURIComponent(url)}&screenWidth=${screenWidth}&deviceScaleFactor=${deviceScaleFactor}`);
+    const res = await fetch(`/screenshot?url=${encodeURIComponent(url)}&screenWidth=${screenWidth}&deviceScaleFactor=${deviceScaleFactor}`);
     if (!res.ok) throw new Error('Failed to capture screenshot');
 
     const blob = await res.blob();
