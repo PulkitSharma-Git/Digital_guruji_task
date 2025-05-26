@@ -1,6 +1,6 @@
 import express from 'express';
 import puppeteer from 'puppeteer';
-import puppeteer, { executablePath } from 'puppeteer';
+import { launch, executablePath } from 'puppeteer';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -28,11 +28,12 @@ app.get('/screenshot', async (req, res) => {
   const scale = parseFloat(deviceScaleFactor) || 2;
 
   try {
-   const browser = await puppeteer.launch({
+   const browser = await launch({
   headless: true,
-  executablePath: executablePath(), // 👈 use direct import
+  executablePath: executablePath(),
   args: ['--no-sandbox', '--disable-setuid-sandbox']
 });
+
 
 
 
