@@ -1,5 +1,6 @@
 import express from 'express';
 import puppeteer from 'puppeteer';
+import puppeteer, { executablePath } from 'puppeteer';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,13 +28,12 @@ app.get('/screenshot', async (req, res) => {
   const scale = parseFloat(deviceScaleFactor) || 2;
 
   try {
-    console.log('Chromium path:', puppeteer.executablePath());
-
-    const browser = await puppeteer.launch({
+   const browser = await puppeteer.launch({
   headless: true,
-  executablePath: puppeteer.executablePath(),
+  executablePath: executablePath(), // 👈 use direct import
   args: ['--no-sandbox', '--disable-setuid-sandbox']
 });
+
 
 
     const page = await browser.newPage();
